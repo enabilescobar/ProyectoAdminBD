@@ -1,0 +1,27 @@
+select *from Profesion
+select *from Localidad
+select *from Nacionalidad
+select *from Persona
+select *from Referencia
+select *from Actividad
+select *from Empresa
+select *from PersonaLabor
+select *from Bloque
+select *from Lote
+select *from Moneda
+select *from Banco
+select *from Casa
+select *from Venta
+select *from CuotaCab
+select *from CuotaDet
+select *from Urbanizacion
+select *from Colinda
+select *from LoteGasto
+select*from Usuario
+select *from UrbanizacionAcceso
+select *from Cobranza
+select *from WebRespuesta
+select *from WebTransaccion
+select *from ReciboCab
+select *from PagoCab
+select *from PagoDet

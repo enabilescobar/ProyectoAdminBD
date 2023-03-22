@@ -1,0 +1,74 @@
+CrearFolderDelProyecto
+
+Crear docker-compose.yml
+version: '3.5'
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04
+    container_name: MS-SQL-SERVER
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    environment:
+      - MSSQL_SA_PASSWORD=${BD_PASSWORD}
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+    volumes:
+      - ./database_file:/var/opt/mssql/data
+  rest:
+    depends_on:
+      - db
+    container_name: REST-Backend
+    build:
+      context: .
+      target: ${STAGE}
+      dockerfile: ./Dockerfile
+    ports:
+      - ${REST_PORT}:${REST_PORT}
+    volumes:
+      - .:/app/
+
+Crear dockerfile
+FROM node:16-slim as dev
+WORKDIR /app
+RUN npm i -g @loopback/cli
+EXPOSE ${REST_PORT}
+CMD ["tail","-f","/dev/null"]
+#COPY . .
+#RUN npm i
+#RUN yarn rebuild
+#CMD ["node","."]
+
+Crear .env
+STAGE=dev
+BD_PASSWORD=C0ntrol1*
+DB_PORT=1433
+REST_PORT=3000
+
+docker compose build
+docker compose up
+
+Conectar a localhost y ejercutar script
+docker container ls
+docker exec -it <Container Id> bash -> entrar al contenedor del Rest
+
+*Crear proyecto loopback
+lb4 app
+
+*Sacar todo de la carpeta proyecto a la raiz 'excepto el dockerfile
+yarn start
+
+lb4 datasource
+mssql://sa:<Password>@<NombreDelContenedor>/<databaseName>
+
+yarn rebuild
+
+lb4 discover -> Se crean los modelos
+'toggle all
+Camel Case
+
+lb4 repository
+
+lb4 controller ->Hacerlos de uno en uno
+Rest controller
+
+generated: false ->model

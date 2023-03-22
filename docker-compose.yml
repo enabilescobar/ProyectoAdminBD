@@ -1,0 +1,25 @@
+version: '3.5'
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04
+    container_name: MS-SQL-PROYECTO-DBA
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    environment:
+      - MSSQL_SA_PASSWORD=${BD_PASSWORD}
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+    volumes:
+      - ./database_file:/var/opt/mssql/data
+  rest:
+    depends_on:
+      - db
+    container_name: REST-Backend
+    build:
+      context: .
+      target: ${STAGE}
+      dockerfile: ./Dockerfile
+    ports:
+      - ${REST_PORT}:${REST_PORT}
+    volumes:
+      - .:/app/
